@@ -11,6 +11,7 @@ class Img{
       PImage startimage;
       PImage endimage;
       PImage house;
+      PImage change;
       
       Img(){
         this.endimage   = loadImage("data/END.png");
@@ -23,6 +24,7 @@ class Img{
         this.donet      = loadImage("data/donet.png");
         this.greengirlopen    = loadImage("data/ggirlopen.png");
         this.house      = loadImage("data/house.png");
+        this.change      = loadImage("data/change.png");
       }
       
       void show(){
@@ -35,6 +37,9 @@ class Img{
       }
       void startshow(){
        image(this.startimage,0,0);
+      }
+      void change(){
+       image(this.change,0,0); 
       }
       void endshow(){
         image(this.endimage,0,0);
