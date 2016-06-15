@@ -1,13 +1,18 @@
 
 Img img;
-Dessert dessert;
-Dessert dessert1;
-Dessert dessert2;
+ESign eSign1;
+ESign eSign2;
+ESign eSign3;
+ESign eSign4;
+ESign eSign5;
+ESign eSign6;
+ESign eSign7;
+
 int childrenX = 20;
 int childrenY = 435;
-int dessertSize =100;
-int dessert1X = 240;
-int dessert1Y = 100;
+//int eSignSize=100;
+int eSignX = 240;
+int eSignY = 100;
 int childrenXsize=250;
 int childrenYsize=250;
 int life ;
@@ -31,7 +36,14 @@ void setup(){
   size (600,640);
   life = 3 ; 
   img = new Img();
-  dessert1 = new Dessert(dessert1X,dessert1Y,2,4,2);
+  eSign1 = new ESign(eSignX,eSignY,2,4,2,110);
+  eSign2 = new ESign(eSignX,eSignY,2,4,2,95);
+  eSign3 = new ESign(eSignX,eSignY,2,4,2,70);
+  eSign4 = new ESign(eSignX,eSignY,2,4,2,55);
+  eSign5 = new ESign(eSignX,eSignY,2,4,2,40);
+  eSign6 = new ESign(eSignX,eSignY,2,4,2,25);
+  eSign7 = new ESign(eSignX,eSignY,2,4,2,10);
+  
   game_state = 1;
   
     minim = new Minim(this);
@@ -48,8 +60,8 @@ void draw(){
       
    case GAME_RUN:
    img.show();
-   dessert1.show(img);
-  dessert1.move(); 
+   eSign4.show(img);
+  eSign4.move(); 
 
    displaylife();
    drawScore();
@@ -108,8 +120,8 @@ void finalScore(){
    life=3;
    point = 0;
    drawScore(); 
-   dessert1.speed = 4;
-   dessert1.y=100;
+   eSign1.speed = 4;
+   eSign1.y=100;
 game_state = GAME_INITIAL ;
   } 
 
@@ -125,8 +137,8 @@ void keyPressed() {
   }
   if(key == 'x' && (game_state == GAME_RUN)){
     img.ggirleat();
-  if((dessert1.y)>=(390) && (dessert1.y) <= (640) ){
-   point+=10*(int)(1+dessert1.speed*0.5);
-   dessert1.y=100;}
+  if((eSign1.y)>=(390) && (eSign1.y) <= (640) ){
+   point+=10*(int)(1+eSign1.speed*0.5);
+   eSign1.y=100;}
   }
 }
