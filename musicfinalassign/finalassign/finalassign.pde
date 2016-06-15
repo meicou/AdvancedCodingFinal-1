@@ -1,10 +1,15 @@
 Img img;
-Dessert dessert;
-Dessert dessert1;
-Dessert dessert2;
+ESign eSign1;
+ESign eSign2;
+ESign eSign3;
+ESign eSign4;
+ESign eSign5;
+ESign eSign6;
+ESign eSign7;
+
 int childrenX = 20;
 int childrenY = 435;
-int dessertSize =100;
+//int dessertSize =100;
 int eSignX = 240;
 int eSignY = 100;
 int eSign;
@@ -26,16 +31,15 @@ AudioPlayer alarm;
 
 //Game state
 int status ;
-final int GAME_INITIAL = 1;
+final int GAME_INITIAL    = 1;
 final int Level1_start    = 2;
-final int Level1_play    = 3;
-
+final int Level1_play     = 3;
 final int Level2_start    = 4;
-final int Level2_play    = 5;
+final int Level2_play     = 5;
 final int Level3_start    = 6;
-final int Level3_play    = 7;
-final int GAME_LOSE    = 8;
-final int GAME_WIN    = 9;
+final int Level3_play     = 7;
+final int GAME_LOSE       = 8;
+final int GAME_WIN        = 9;
 final int Level1_pause    = 10;
 final int Level2_pause    = 11;
 final int Level3_pause    = 12;
@@ -45,7 +49,13 @@ void setup(){
   size (600,640);
   life = 3 ; 
   img = new Img();
- dessert1 = new Dessert(eSignX,eSignY,2,4,2);
+  eSign1 = new ESign(eSignX,eSignY,2,4,2,110);
+  eSign2 = new ESign(eSignX,eSignY,2,4,2,95);
+  eSign3 = new ESign(eSignX,eSignY,2,4,2,70);
+  eSign4 = new ESign(eSignX,eSignY,2,4,2,55);
+  eSign5 = new ESign(eSignX,eSignY,2,4,2,40);
+  eSign6 = new ESign(eSignX,eSignY,2,4,2,25);
+  eSign7 = new ESign(eSignX,eSignY,2,4,2,10);
   status = 1;
   reset();
 }
@@ -61,63 +71,96 @@ void draw(){
    break;
    
    case Level1_start:
+   img.startshow();
   //img.level1_startpic1_show();
-
-  break;
+   break;
       
    case Level1_play:
    img.show();
-   dessert1.show(img);
-   dessert1.move();   
+   eSign1.show(img);
+   eSign1.move(); 
+   checkLose();  
    displaylife();
    drawScore();
+   change();
+   println(score);
+   break;
+   
+   case Level2_start:
+   img.startshow();
+  //img.level1_startpic1_show();
+   break;
+   
+   case Level2_play:
+   img.show();
+   eSign4.show(img);
+   eSign4.move(); 
+   checkLose();
+   displaylife();
+   drawScore();
+   change();
+   println(score);
+   break;
+   
+   case Level3_start:
+   img.startshow();
+  //img.level1_startpic1_show();
+   break;
+   
+   case Level3_play:
+   img.show();
+   eSign7.show(img);
+   eSign7.move(); 
+   checkLose();
+   displaylife();
+   drawScore();
+   change();
    println(score);
    break;
    
    case GAME_LOSE :
    img.endshow();
-   finalScore();
- 
+   finalScore(); 
    break;
-   
-   case Level2_play:
-   img.show();
-   dessert1.show(img);
-   dessert1.move(); 
-
-   displaylife();
-   drawScore();
-   println(score);
-   break;
-   
-   case Level3_play:
-   img.show();
-   dessert1.show(img);
-   dessert1.move(); 
-
-   displaylife();
-   drawScore();
-   println(score);
-   break;
-   
-   
-   //case GAME_LOSE :
-  //img.endshow();
-   //finalScore();
-   //alarm.play();
-   //break;
   
-}
+  }
 }
 
+void change() {
+  if(score == 160) {
+    status = Level2_start;
+  }
+  if(score == 360) {
+    status = Level3_start; 
+  }
+  if(score == 560) {
+    status = GAME_WIN;
+  }
+}
 
+void checkLose() {  
+   if(key != UP && eSign == eSignUp) {
+     life--;
+   }
+   if(key != DOWN && eSign == eSignDown) {
+     life--;
+   }
+   if(key != RIGHT && eSign == eSignRight) {
+     life--;
+   }
+   if(key != LEFT && eSign == eSignRight) {
+     life--;
+   }
+   if (life==0){
+       status = GAME_LOSE;
+   }
+}
 
 void displaylife(){
    int []lifeArr = new int[3];
    for (int n = 0; n < life ; n++ ) {  
    image(img.heart,400+50*n,60);
-   lifeArr[n] = n;
-   
+   lifeArr[n] = n;   
    }
 }
 
@@ -136,15 +179,15 @@ void finalScore(){
   text(score,310,160);
 }
 
-  void reset(){
+void reset(){
    displaylife();
    life=3;
    score = 0;
    drawScore(); 
-   dessert1.speed = 4;
-   dessert1.y=100;
-  status = GAME_INITIAL ;
-  } 
+   eSign1.speed = 4;
+   eSign1.y=100;
+   status = GAME_INITIAL ;
+} 
 
 
 void keyPressed() {
@@ -153,22 +196,22 @@ void keyPressed() {
       switch(keyCode){
         case UP:
               if(eSign == eSignUp){
-                 score++;
+                 score+=10;
                }
                break;
         case DOWN:
               if(eSign == eSignDown){
-                 score++;
+                 score+=10;
                } 
                break;
         case LEFT:
                if(eSign == eSignLeft){
-                 score++;
+                 score+=10;
                } 
                break;
         case RIGHT:
                if(eSign == eSignRight){
-                 score++;
+                 score+=10;
                }
                break;
     }
@@ -192,6 +235,7 @@ void keyPressed() {
      case Level1_pause:
      status = Level1_play;
      break;
+     
      case Level2_start:
      status = Level2_play;
      break;
