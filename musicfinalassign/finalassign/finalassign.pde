@@ -71,7 +71,7 @@ void draw(){
    break;
    
    case Level1_start:
-   img.startshow();
+   img.change();
   //img.level1_startpic1_show();
    break;
       
@@ -87,7 +87,7 @@ void draw(){
    break;
    
    case Level2_start:
-   img.startshow();
+   img.change();
   //img.level1_startpic1_show();
    break;
    
@@ -103,7 +103,7 @@ void draw(){
    break;
    
    case Level3_start:
-   img.startshow();
+   img.change();
   //img.level1_startpic1_show();
    break;
    
@@ -126,19 +126,28 @@ void draw(){
   }
 }
 
+void displaylife(){
+   int []lifeArr = new int[3];
+   for (int n = 0; n < life ; n++ ) {  
+   image(img.heart,400+50*n,60);
+   lifeArr[n] = n;   
+   }
+}
+
 void change() {
-  if(score == 160) {
+  if(status == Level1_play && score == 160) {
     status = Level2_start;
   }
-  if(score == 360) {
+  if(status == Level2_play && score == 200) {
     status = Level3_start; 
   }
-  if(score == 560) {
+  if(status == Level3_play && score == 200) {
     status = GAME_WIN;
   }
 }
 
 void checkLose() {  
+  if(status == Level1_play||status == Level2_play||status == Level3_play){
    if(key != UP && eSign == eSignUp) {
      life--;
    }
@@ -155,14 +164,9 @@ void checkLose() {
        status = GAME_LOSE;
    }
 }
-
-void displaylife(){
-   int []lifeArr = new int[3];
-   for (int n = 0; n < life ; n++ ) {  
-   image(img.heart,400+50*n,60);
-   lifeArr[n] = n;   
-   }
 }
+
+
 
 void drawScore() {
   noStroke();
@@ -186,9 +190,8 @@ void reset(){
    drawScore(); 
    eSign1.speed = 4;
    eSign1.y=100;
-   status = GAME_INITIAL ;
+   //status = GAME_INITIAL ;
 } 
-
 
 void keyPressed() {
   if (status == Level1_play||status == Level2_play||status == Level3_play) {
@@ -238,6 +241,7 @@ void keyPressed() {
      
      case Level2_start:
      status = Level2_play;
+     reset();
      break;
    
     case Level2_play:
@@ -247,8 +251,10 @@ void keyPressed() {
      case Level2_pause:
      status = Level2_play;
      break;
+     
      case Level3_start:
      status = Level3_play;
+     reset();
      break;
    
     case Level3_play:
